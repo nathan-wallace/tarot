@@ -1,5 +1,6 @@
 import { Image } from 'expo-image';
 import { Platform, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
 
 import { HelloWave } from '@/components/HelloWave';
 import LottieAnimation from '@/components/LottieAnimation';
@@ -52,6 +53,12 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Try the Tarot demo</ThemedText>
+        <Link href="/cards/fool">
+          <ThemedText type="link">View The Fool card</ThemedText>
+        </Link>
       </ThemedView>
     </ParallaxScrollView>
   );
