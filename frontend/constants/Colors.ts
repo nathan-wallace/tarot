@@ -6,6 +6,20 @@
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
 
+const mysticalPaletteLight = {
+  purple: '#a78bfa',
+  indigo: '#818cf8',
+  teal: '#5eead4',
+  gold: '#fcd34d',
+};
+
+const mysticalPaletteDark = {
+  purple: '#7c3aed',
+  indigo: '#6366f1',
+  teal: '#2dd4bf',
+  gold: '#fbbf24',
+};
+
 export const Colors = {
   light: {
     text: '#11181C',
@@ -14,6 +28,7 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
+    ...mysticalPaletteLight,
   },
   dark: {
     text: '#ECEDEE',
@@ -22,5 +37,6 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
+    ...mysticalPaletteDark,
   },
 };
