@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { Link } from 'expo-router';
 import { HelloWave } from '@/components/HelloWave';
 import { AchievementBadge } from '@/components/AchievementBadge';
 import LottieAnimation from '@/components/LottieAnimation';
@@ -62,6 +62,10 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
+<ThemedText type="subtitle">Try the Tarot demo</ThemedText>
+        <Link href="/cards/fool">
+          <ThemedText type="link">View The Fool card</ThemedText>
+        </Link>
         <ThemedText type="subtitle">Achievements</ThemedText>
         <ThemedText>Completed readings: {state.completedReadings}</ThemedText>
         <TouchableOpacity onPress={addReading} style={{ marginBottom: 8 }}>
