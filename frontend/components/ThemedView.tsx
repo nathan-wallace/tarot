@@ -3,13 +3,12 @@ import { ImageBackground, type ViewProps } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { starryDark, starryLight } from '../assets/imageData';
 
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;
   darkColor?: string;
 };
-
-import { starryDark, starryLight } from '../assets/imageData';
 
 const textures = {
   light: { uri: starryLight },
