@@ -1,13 +1,21 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
+import { AchievementBadge } from '@/components/AchievementBadge';
 import LottieAnimation from '@/components/LottieAnimation';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useAchievements } from '@/hooks/useAchievements';
+import { DECKS, isDeckUnlocked } from '@/constants/decks';
+import { SPREADS, isSpreadUnlocked } from '@/constants/spreads';
 
 export default function HomeScreen() {
+  const { state, addReading } = useAchievements();
+  const unlockedDecks = DECKS.filter((d) => isDeckUnlocked(d, state.milestones));
+  const unlockedSpreads = SPREADS.filter((s) => isSpreadUnlocked(s, state.milestones));
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -52,6 +60,28 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Achievements</ThemedText>
+        <ThemedText>Completed readings: {state.completedReadings}</ThemedText>
+        <TouchableOpacity onPress={addReading} style={{ marginBottom: 8 }}>
+          <ThemedText type="link">Simulate reading</ThemedText>
+        </TouchableOpacity>
+        {[...state.milestones].map((id) => (
+          <AchievementBadge key={id} label={id} />
+        ))}
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Unlocked Decks</ThemedText>
+        {unlockedDecks.map((d) => (
+          <ThemedText key={d.id}>{d.name}</ThemedText>
+        ))}
+        <ThemedText type="subtitle" style={{ marginTop: 8 }}>
+          Unlocked Spreads
+        </ThemedText>
+        {unlockedSpreads.map((s) => (
+          <ThemedText key={s.id}>{s.name}</ThemedText>
+        ))}
       </ThemedView>
     </ParallaxScrollView>
   );
