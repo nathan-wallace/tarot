@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Expo
+.expo/
+.expo-shared/
+
+# Misc
+.DS_Store
+
+# Logs
+npm-debug.log*
