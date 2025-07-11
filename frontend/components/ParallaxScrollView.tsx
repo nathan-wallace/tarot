@@ -5,7 +5,11 @@ import Animated, {
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
+  useSharedValue,
+  withTiming,
+  createAnimatedComponent,
 } from 'react-native-reanimated';
+import { useEffect } from 'react';
 
 import { ThemedView } from '@/components/ThemedView';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
@@ -27,8 +31,13 @@ export default function ParallaxScrollView({
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
+  const appear = useSharedValue(0);
+  useEffect(() => {
+    appear.value = withTiming(1, { duration: 500 });
+  }, [appear]);
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
+      opacity: interpolate(scrollOffset.value, [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT], [1, 1, 0]),
       transform: [
         {
           translateY: interpolate(
@@ -43,6 +52,11 @@ export default function ParallaxScrollView({
       ],
     };
   });
+  const contentAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: appear.value,
+    transform: [{ scale: 0.95 + 0.05 * appear.value }],
+  }));
+  const AnimatedThemedView = createAnimatedComponent(ThemedView);
 
   return (
     <ThemedView style={styles.container}>
@@ -59,7 +73,9 @@ export default function ParallaxScrollView({
           ]}>
           {headerImage}
         </Animated.View>
-        <ThemedView style={styles.content}>{children}</ThemedView>
+        <AnimatedThemedView style={[styles.content, contentAnimatedStyle]}>
+          {children}
+        </AnimatedThemedView>
       </Animated.ScrollView>
     </ThemedView>
   );
